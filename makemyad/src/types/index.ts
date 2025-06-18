@@ -16,6 +16,27 @@ export interface User {
   email: string;
   phone?: string;
   location?: string;
+  role: string;
+  isActive: boolean;
+  createdAt: string;
+  lastLogin?: string;
+}
+
+export interface Role {
+  id: string;
+  name: string;
+  description: string;
+  permissions: Permission[];
+  isDefault: boolean;
+  createdAt: string;
+}
+
+export interface Permission {
+  id: string;
+  name: string;
+  description: string;
+  resource: string;
+  action: 'create' | 'read' | 'update' | 'delete' | 'manage';
 }
 
 export interface Category {
@@ -30,4 +51,19 @@ export interface SearchFilters {
   minPrice?: number;
   maxPrice?: number;
   sortBy?: 'date' | 'price' | 'relevance';
+}
+
+export interface UserFilters {
+  role?: string;
+  isActive?: boolean;
+  search?: string;
+  sortBy?: 'name' | 'email' | 'createdAt' | 'lastLogin';
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface RoleFilters {
+  search?: string;
+  isDefault?: boolean;
+  sortBy?: 'name' | 'createdAt';
+  sortOrder?: 'asc' | 'desc';
 }

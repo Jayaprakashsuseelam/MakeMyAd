@@ -14,6 +14,14 @@ const AdDetails = React.lazy(() => import('./components/pages/AdDetails'));
 const About = React.lazy(() => import('./components/pages/About'));
 const Contact = React.lazy(() => import('./components/pages/Contact'));
 
+// Admin components
+const AdminDashboard = React.lazy(() => import('./components/pages/AdminDashboard'));
+const UserManagement = React.lazy(() => import('./components/pages/UserManagement'));
+const RoleManagement = React.lazy(() => import('./components/pages/RoleManagement'));
+
+// Auth components
+const ProtectedRoute = React.lazy(() => import('./components/auth/ProtectedRoute'));
+
 function App() {
   return (
     <Provider store={store}>
@@ -36,6 +44,41 @@ function App() {
                   <Route path="/ads/:id" element={<AdDetails />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />
+
+                  {/* Admin Routes */}
+                  <Route
+                    path="/admin"
+                    element={
+                      <ProtectedRoute
+                        requiredPermissions={[{ resource: 'users', action: 'manage' }]}
+                        fallbackPath="/"
+                      >
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/users"
+                    element={
+                      <ProtectedRoute
+                        requiredPermissions={[{ resource: 'users', action: 'manage' }]}
+                        fallbackPath="/"
+                      >
+                        <UserManagement />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/roles"
+                    element={
+                      <ProtectedRoute
+                        requiredPermissions={[{ resource: 'roles', action: 'manage' }]}
+                        fallbackPath="/"
+                      >
+                        <RoleManagement />
+                      </ProtectedRoute>
+                    }
+                  />
                 </Routes>
               </Box>
               <Footer />
